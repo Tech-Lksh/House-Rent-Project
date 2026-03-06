@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import Toast from "../common/Toast";
 
+
 const AllPropertiesCards = ({ loggedIn }) => {
   const [allProperties, setAllProperties] = useState([]);
   const [filterPropertyType, setPropertyType] = useState("");
@@ -19,7 +20,7 @@ const AllPropertiesCards = ({ loggedIn }) => {
   const getAllProperties = async () => {
     try {
       const res = await axios.get(
-        "https://house-rent-project-2.onrender.com/api/user/getAllProperties",
+        "http://localhost:8001/api/user/getAllProperties",
         { withCredentials: true }
       );
       setAllProperties(res.data.data);
@@ -31,20 +32,20 @@ const AllPropertiesCards = ({ loggedIn }) => {
   const handleBooking = async (status, propertyId, ownerId) => {
     try {
       const res = await axios.post(
-        `https://house-rent-project-2.onrender.com/api/user/bookinghandle/${propertyId}`,
+        `http://localhost:8001/api/user/bookinghandle/${propertyId}`,
         { userDetails, status, ownerId },
         { withCredentials: true }
       );
 
       if (res.data.success) {
-        showToast("success", res.data.message); // FIX
+        showToast(res.data.message);
         setShowModal(false);
       } else {
-        showToast("error", res.data.message); // FIX
+        showToast(res.data.message);
       }
     } catch (error) {
       console.log(error);
-      showToast("error", "Booking failed"); // FIX
+      showToast("Booking failed");
     }
   };
 
@@ -129,14 +130,12 @@ const AllPropertiesCards = ({ loggedIn }) => {
               className="bg-gray-800/70 border border-gray-700 rounded-lg shadow-lg hover:shadow-indigo-600/40 transition transform hover:-translate-y-1 overflow-hidden"
             >
               <img
-                src={`https://house-rent-project-2.onrender.com${property.propertyImage[0]?.path}`}
+                src={`http://localhost:8001${property.propertyImage[0]?.path}`}
                 alt="Property"
                 className="w-full h-40 object-cover"
               />
               <div className="p-4">
-                <h3 className="font-semibold text-lg text-white">
-                  {property.propertyAddress}
-                </h3>
+                <h3 className="font-semibold text-lg text-white">{property.propertyAddress}</h3>
                 <p className="text-gray-400 text-sm">
                   {property.propertyType} - {property.propertyAdType}
                 </p>
@@ -173,9 +172,7 @@ const AllPropertiesCards = ({ loggedIn }) => {
             </div>
           ))
         ) : (
-          <p className="text-gray-400">
-            No properties available at the moment.
-          </p>
+          <p className="text-gray-400">No properties available at the moment.</p>
         )}
       </div>
 
@@ -191,7 +188,7 @@ const AllPropertiesCards = ({ loggedIn }) => {
             </button>
             <h3 className="text-xl font-bold mb-4 text-white">Property Info</h3>
             <img
-              src={`https://house-rent-project-2.onrender.com${selectedProperty.propertyImage[0]?.path}`}
+              src={`http://localhost:8001${selectedProperty.propertyImage[0]?.path}`}
               alt="Property"
               className="w-full h-48 object-cover rounded mb-4"
             />
@@ -228,11 +225,7 @@ const AllPropertiesCards = ({ loggedIn }) => {
               className="mt-4 space-y-2"
               onSubmit={(e) => {
                 e.preventDefault();
-                handleBooking(
-                  "pending",
-                  selectedProperty._id,
-                  selectedProperty.ownerId
-                );
+                handleBooking("pending", selectedProperty._id, selectedProperty.ownerId);
               }}
             >
               <input
