@@ -19,7 +19,7 @@ const AllPropertiesCards = ({ loggedIn }) => {
   const getAllProperties = async () => {
     try {
       const res = await axios.get(
-        "https://house-rent-project-1.onrender.com/api/user/getAllProperties",
+        "http://localhost:8001/api/user/getAllProperties",
         { withCredentials: true }
       );
       setAllProperties(res.data.data);
@@ -31,7 +31,7 @@ const AllPropertiesCards = ({ loggedIn }) => {
   const handleBooking = async (status, propertyId, ownerId) => {
     try {
       const res = await axios.post(
-        `https://house-rent-project-1.onrender.com/api/user/bookinghandle/${propertyId}`,
+        `http://localhost:8001/api/user/bookinghandle/${propertyId}`,
         { userDetails, status, ownerId },
         { withCredentials: true }
       );
@@ -129,7 +129,7 @@ const AllPropertiesCards = ({ loggedIn }) => {
               className="bg-gray-800/70 border border-gray-700 rounded-lg shadow-lg hover:shadow-indigo-600/40 transition transform hover:-translate-y-1 overflow-hidden"
             >
               <img
-                src={`https://house-rent-project-1.onrender.com${property.propertyImage[0]?.path}`}
+                src={`http://localhost:8001${property.propertyImage[0]?.path}`}
                 alt="Property"
                 className="w-full h-40 object-cover"
               />
@@ -191,7 +191,7 @@ const AllPropertiesCards = ({ loggedIn }) => {
             </button>
             <h3 className="text-xl font-bold mb-4 text-white">Property Info</h3>
             <img
-              src={`https://house-rent-project-1.onrender.com${selectedProperty.propertyImage[0]?.path}`}
+              src={`http://localhost:8001${selectedProperty.propertyImage[0]?.path}`}
               alt="Property"
               className="w-full h-48 object-cover rounded mb-4"
             />

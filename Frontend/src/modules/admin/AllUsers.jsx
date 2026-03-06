@@ -22,7 +22,7 @@ const AllUsers = () => {
   const getAllUser = async () => {
     try {
       const response = await axios.get(
-        "https://house-rent-project-1.onrender.com/api/admin/getallusers"
+        "http://localhost:8001/api/admin/getallusers"
       );
       if (response.data.success) {
         setAllUser(response.data.data);
@@ -44,7 +44,7 @@ const AllUsers = () => {
   const handleStatus = async (userid, status) => {
     try {
       const res = await axios.post(
-        "https://house-rent-project-1.onrender.com/api/admin/handlestatus",
+        "http://localhost:8001/api/admin/handlestatus",
         { userid, status }
       );
 
