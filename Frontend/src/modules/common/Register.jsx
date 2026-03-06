@@ -34,7 +34,7 @@ const Register = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8001/api/user/register",
+        "https://house-rent-project.onrender.com/api/user/register",
         data,
         { withCredentials: true }
       );
