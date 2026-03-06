@@ -38,7 +38,7 @@ const ForgotPassword = () => {
 
     try {
       const res = await axios.post(
-        "https://house-rent-project.onrender.com/api/user/forgotpassword",
+        "https://house-rent-project-1.onrender.com/api/user/forgotpassword",
         data,
         { withCredentials: true }
       );

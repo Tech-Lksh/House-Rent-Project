@@ -11,7 +11,7 @@ const OwnerAllBookings = () => {
  const getAllProperty = async () => {
     try {
       const response = await axios.get(
-        "https://house-rent-project.onrender.com/api/owner/getallbookings",
+        "https://house-rent-project-1.onrender.com/api/owner/getallbookings",
         { withCredentials: true }
       );
 
@@ -39,7 +39,7 @@ const OwnerAllBookings = () => {
   const handleStatus = async (bookingId, propertyId, status) => {
     try {
       const res = await axios.post(
-        "https://house-rent-project.onrender.com/api/owner/handlebookingstatus",
+        "https://house-rent-project-1.onrender.com/api/owner/handlebookingstatus",
         { bookingId, propertyId, status },
         { withCredentials: true }
       );

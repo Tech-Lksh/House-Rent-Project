@@ -12,7 +12,7 @@ const AdminAllProperty = () => {
   const getAllProperty = async () => {
     try {
       const response = await axios.get(
-        "https://house-rent-project.onrender.com/api/admin/getallproperties",
+        "https://house-rent-project-1.onrender.com/api/admin/getallproperties",
         { withCredentials: true }
       );
 

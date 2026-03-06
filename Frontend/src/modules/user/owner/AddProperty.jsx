@@ -52,7 +52,7 @@ function AddProperty() {
 
     try {
       const res = await axios.post(
-        "https://house-rent-project.onrender.com/api/owner/postproperty",
+        "https://house-rent-project-1.onrender.com/api/owner/postproperty",
         formData,
         { withCredentials: true }
       );

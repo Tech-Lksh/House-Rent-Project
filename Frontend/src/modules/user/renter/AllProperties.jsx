@@ -10,7 +10,7 @@ const RenterAllProperty = () => {
   const getAllProperty = async () => {
     try {
       const response = await axios.get(
-        "https://house-rent-project.onrender.com/api/user/getallbookings",
+        "https://house-rent-project-1.onrender.com/api/user/getallbookings",
         { withCredentials: true }
       );
 

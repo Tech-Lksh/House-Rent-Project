@@ -29,7 +29,7 @@ const OwnerAllProperties = () => {
   const getAllProperty = async () => {
     try {
       const response = await axios.get(
-        "https://house-rent-project.onrender.com/api/owner/getallproperties",
+        "https://house-rent-project-1.onrender.com/api/owner/getallproperties",
         { withCredentials: true }
       );
       if (response.data.success) {
@@ -73,7 +73,7 @@ const OwnerAllProperties = () => {
       formData.append("isAvailable", status);
 
       const res = await axios.patch(
-        `https://house-rent-project.onrender.com/api/owner/updateproperty/${propertyId}`,
+        `https://house-rent-project-1.onrender.com/api/owner/updateproperty/${propertyId}`,
         formData,
         { withCredentials: true }
       );
@@ -102,7 +102,7 @@ const OwnerAllProperties = () => {
     if (window.confirm("Are you sure to delete?")) {
       try {
         const response = await axios.delete(
-          `https://house-rent-project.onrender.com/api/owner/deleteproperty/${propertyId}`,
+          `https://house-rent-project-1.onrender.com/api/owner/deleteproperty/${propertyId}`,
           { withCredentials: true }
         );
 
