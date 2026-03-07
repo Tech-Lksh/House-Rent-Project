@@ -163,41 +163,98 @@ Backend
 
 
 
-📷 Screenshots
+## 📷 Screenshots
 
-LandingPage:
-<img width="700" height="897" alt="image" src="https://github.com/user-attachments/assets/4475381a-e5e7-480b-ba3e-151afbec6429" />
-<img width="700" height="903" alt="image" src="https://github.com/user-attachments/assets/c875a664-97db-4c24-a112-80ebd233ec4b" />
+### 🏠 Landing Page
 
-RegisterPage:
-<img width="700" height="901" alt="image" src="https://github.com/user-attachments/assets/e6fe6ade-374f-4a80-ba3c-dcfdd65e404e" />
+<p align="center">
+<img src="https://github.com/user-attachments/assets/4475381a-e5e7-480b-ba3e-151afbec6429" width="800"/>
+</p>
 
-LoginPage:
-<img width="700" height="900" alt="image" src="https://github.com/user-attachments/assets/c53de880-75b7-478d-ab1f-3a566df373e9" />
+<p align="center">
+<img src="https://github.com/user-attachments/assets/c875a664-97db-4c24-a112-80ebd233ec4b" width="800"/>
+</p>
 
-OwnerHome: 
-<img width="700" height="902" alt="image" src="https://github.com/user-attachments/assets/75d7a22e-e34f-4865-9f36-dc794f0069f1" />
+---
 
-OwnerPropertiesPage:
-<img width="700" height="904" alt="image" src="https://github.com/user-attachments/assets/d854791e-a372-419a-b3ab-a2998aafa052" />
+### 📝 Register Page
 
-OwnerAllBookingsPage:
-<img width="700" height="905" alt="image" src="https://github.com/user-attachments/assets/8ca6020b-3f86-4498-ad97-b3cfe22b744b" />
+<p align="center">
+<img src="https://github.com/user-attachments/assets/e6fe6ade-374f-4a80-ba3c-dcfdd65e404e" width="800"/>
+</p>
 
-AdminHome:
-<img width="700" height="905" alt="image" src="https://github.com/user-attachments/assets/06385f98-95a0-44ad-a3af-85ecb848ae08" />
+---
 
-AdminAllPropertiesPage:
-<img width="700" height="902" alt="image" src="https://github.com/user-attachments/assets/e319bd97-8ae3-4f63-a6f9-4d1a8c9384a4" />
+### 🔐 Login Page
 
-AdminAllBookingsPage:
-<img width="700" height="896" alt="image" src="https://github.com/user-attachments/assets/cb15d92b-8389-4b16-a655-95b51a271ba2" />
+<p align="center">
+<img src="https://github.com/user-attachments/assets/c53de880-75b7-478d-ab1f-3a566df373e9" width="800"/>
+</p>
 
-RenterHome:
-<img width="700" height="899" alt="image" src="https://github.com/user-attachments/assets/b6037d0b-a831-42f9-bb03-719e5ecc9fac" />
+---
 
-RenterBookingHistory:
-<img width="700" height="901" alt="image" src="https://github.com/user-attachments/assets/f7330526-4d3f-4d2a-87ce-df1fec7a29fb" />
+### 🏡 Owner Dashboard
+
+<p align="center">
+<img src="https://github.com/user-attachments/assets/75d7a22e-e34f-4865-9f36-dc794f0069f1" width="800"/>
+</p>
+
+---
+
+### 📋 Owner Properties Page
+
+<p align="center">
+<img src="https://github.com/user-attachments/assets/d854791e-a372-419a-b3ab-a2998aafa052" width="800"/>
+</p>
+
+---
+
+### 📅 Owner Bookings Page
+
+<p align="center">
+<img src="https://github.com/user-attachments/assets/8ca6020b-3f86-4498-ad97-b3cfe22b744b" width="800"/>
+</p>
+
+---
+
+### 🛠 Admin Dashboard
+
+<p align="center">
+<img src="https://github.com/user-attachments/assets/06385f98-95a0-44ad-a3af-85ecb848ae08" width="800"/>
+</p>
+
+---
+
+### 🏢 Admin Properties Page
+
+<p align="center">
+<img src="https://github.com/user-attachments/assets/e319bd97-8ae3-4f63-a6f9-4d1a8c9384a4" width="800"/>
+</p>
+
+---
+
+### 📊 Admin Bookings Page
+
+<p align="center">
+<img src="https://github.com/user-attachments/assets/cb15d92b-8389-4b16-a655-95b51a271ba2" width="800"/>
+</p>
+
+---
+
+### 👤 Renter Home
+
+<p align="center">
+<img src="https://github.com/user-attachments/assets/b6037d0b-a831-42f9-bb03-719e5ecc9fac" width="800"/>
+</p>
+
+---
+
+### 📜 Renter Booking History
+
+<p align="center">
+<img src="https://github.com/user-attachments/assets/f7330526-4d3f-4d2a-87ce-df1fec7a29fb" width="800"/>
+</p>
+
 
 
 ## 🔗 API Endpoints
