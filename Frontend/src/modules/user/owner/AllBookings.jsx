@@ -12,7 +12,7 @@ const OwnerAllBookings = () => {
  const getAllProperty = async () => {
     try {
       const response = await axios.get(
-        `${API_URL}/api/owner/getallbookings`,
+        `${API_URL}/api/owner/get-all-bookings`,
         { withCredentials: true }
       );
 
@@ -38,24 +38,24 @@ const OwnerAllBookings = () => {
   }, []);
 
   const handleStatus = async (bookingId, propertyId, status) => {
-    try {
-      const res = await axios.post(
-        `${API_URL}/api/owner/handlebookingstatus`,
-        { bookingId, propertyId, status },
-        { withCredentials: true }
-      );
+  try {
+    const res = await axios.patch(
+      `${API_URL}/api/owner/handle-booking-status`,
+      { bookingId, propertyId, status },
+      { withCredentials: true }
+    );
 
-      if (res.data.success) {
-        message.success(res.data.message);
-        getAllProperty();
-      } else {
-        message.error("Something went wrong");
-      }
-    } catch (error) {
-      console.log(error);
-      message.error("Failed to update booking status");
+    if (res.data.success) {
+      message.success(res.data.message);
+      getAllProperty();
+    } else {
+      message.error("Something went wrong");
     }
-  };
+  } catch (error) {
+    console.log(error);
+    message.error("Failed to update booking status");
+  }
+};
 
   return (
     <div className="overflow-x-auto mt-6">
@@ -64,8 +64,8 @@ const OwnerAllBookings = () => {
       <tr>
         <th className="py-3 px-4 text-left">Booking ID</th>
         <th className="py-3 px-4 text-center">Property ID</th>
-        <th className="py-3 px-4 text-center">Tenant Name</th>
-        <th className="py-3 px-4 text-center">Tenant Phone</th>
+        <th className="py-3 px-4 text-center">Renter Name</th>
+        <th className="py-3 px-4 text-center">Renter Phone</th>
         <th className="py-3 px-4 text-center">Booking Status</th>
         <th className="py-3 px-4 text-center">Actions</th>
       </tr>

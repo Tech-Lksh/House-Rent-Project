@@ -6,7 +6,6 @@ import API_URL from "../../api";
 
 axios.defaults.withCredentials = true;
 
-
 const Register = () => {
   const navigate = useNavigate();
   const [toast, setToast] = useState({ show: false, type: "", message: "" });
@@ -34,11 +33,9 @@ const Register = () => {
     }
 
     try {
-      const response = await axios.post(
-        `${API_URL}/api/user/register`,
-        data,
-        { withCredentials: true }
-      );
+      const response = await axios.post(`${API_URL}/api/user/register`, data, {
+        withCredentials: true,
+      });
 
       if (response.data.success) {
         showToast("success", response.data.message);
@@ -47,7 +44,11 @@ const Register = () => {
         showToast("error", response.data.message);
       }
     } catch (error) {
-      showToast("error", error.response?.data?.message || "Registration failed. Please try again.");
+      showToast(
+        "error",
+        error.response?.data?.message ||
+          "Registration failed. Please try again.",
+      );
     }
   };
 
@@ -66,10 +67,16 @@ const Register = () => {
           RentEase
         </h2>
         <div className="space-x-8 text-lg">
-          <Link to="/" className="text-gray-200 hover:text-indigo-400 transition">
+          <Link
+            to="/"
+            className="text-gray-200 hover:text-indigo-400 transition"
+          >
             Home
           </Link>
-          <Link to="/login" className="text-gray-200 hover:text-indigo-400 transition">
+          <Link
+            to="/login"
+            className="text-gray-200 hover:text-indigo-400 transition"
+          >
             Login
           </Link>
           <Link
@@ -88,9 +95,7 @@ const Register = () => {
             <div className="mx-auto w-16 h-16 flex items-center justify-center rounded-full bg-indigo-500/20 text-indigo-400 text-3xl font-bold shadow-inner">
               📝
             </div>
-            <h1 className="text-2xl font-semibold mt-4 text-white">
-              Sign Up
-            </h1>
+            <h1 className="text-2xl font-semibold mt-4 text-white">Sign Up</h1>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-5">
@@ -126,7 +131,7 @@ const Register = () => {
               className="w-full px-4 py-2 bg-gray-800 border border-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder-gray-400"
             >
               <option value="">Select User Type</option>
-              <option value="Renter">Renter</option>
+              <option value="User">Renter</option> {/* frontend label */}
               <option value="Owner">Owner</option>
               <option value="Admin">Admin</option>
             </select>

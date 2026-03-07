@@ -10,30 +10,29 @@ const AdminAllBookings = () => {
   const [allBookings, setAllBookings] = useState([]);
   const navigate = useNavigate();
 
-  const getAllBooking = async () => {
-    try {
-      const response = await axios.get(
-        `${API_URL}/api/admin/getallbookings`,
-        { withCredentials: true }
-      );
+  // Get all bookings (Admin)
+const getAllBooking = async () => {
+  try {
+    const response = await axios.get(`${API_URL}/api/admin/get-all-bookings`, {
+      withCredentials: true,
+    });
 
-      if (response.data.success) {
-        setAllBookings(response.data.data);
-      } else {
-        message.error(response.data.message || "Unauthorized access");
-        navigate("/login"); 
-      }
-    } catch (error) {
-      console.error(error);
-      if (error.response && error.response.status === 401) {
-        message.error("Session expired, please login again");
-        navigate("/login");
-      } else {
-        message.error("Failed to fetch bookings");
-      }
+    if (response.data.success) {
+      setAllBookings(response.data.data);
+    } else {
+      message.error(response.data.message || "Unauthorized access");
+      navigate("/login");
     }
-  };
-
+  } catch (error) {
+    console.error(error);
+    if (error.response?.status === 401) {
+      message.error("Session expired, please login again");
+      navigate("/login");
+    } else {
+      message.error("Failed to fetch bookings");
+    }
+  }
+};
 
   useEffect(() => {
     getAllBooking();
@@ -58,8 +57,9 @@ const AdminAllBookings = () => {
             allBookings.map((booking, index) => (
               <tr
                 key={booking._id}
-                className={`transition duration-200 ${index % 2 === 0 ? "bg-gray-800/60" : "bg-gray-900/60"
-                  } hover:bg-indigo-500/20`}
+                className={`transition duration-200 ${
+                  index % 2 === 0 ? "bg-gray-800/60" : "bg-gray-900/60"
+                } hover:bg-indigo-500/20`}
               >
                 <td className="py-2 px-4 border-b border-gray-700 text-gray-200">
                   {booking._id}
@@ -80,14 +80,16 @@ const AdminAllBookings = () => {
                   {booking.phone}
                 </td>
                 <td
-                  className={`py-2 px-4 border-b border-gray-700 text-center font-semibold ${booking.bookingStatus === "Confirmed"
+                  className={`py-2 px-4 border-b border-gray-700 text-center font-semibold ${
+                    booking.bookingStatus === "booked"
                       ? "text-green-400"
-                      : booking.bookingStatus === "Pending"
+                      : booking.bookingStatus === "pending"
                         ? "text-yellow-400"
                         : "text-red-400"
-                    }`}
+                  }`}
                 >
-                  {booking.bookingStatus}
+                  {booking.bookingStatus.charAt(0).toUpperCase() +
+                    booking.bookingStatus.slice(1)}
                 </td>
               </tr>
             ))

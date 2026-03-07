@@ -3,8 +3,7 @@ import React, { useState, useEffect } from "react";
 import Toast from "../common/Toast";
 import API_URL from "../../api";
 
-
-const AllPropertiesCards = ({ loggedIn }) => {
+const AllPropertiesCards = ({ loggedIn, userId }) => {
   const [allProperties, setAllProperties] = useState([]);
   const [filterPropertyType, setPropertyType] = useState("");
   const [filterPropertyAdType, setPropertyAdType] = useState("");
@@ -14,39 +13,41 @@ const AllPropertiesCards = ({ loggedIn }) => {
   const [userDetails, setUserDetails] = useState({ fullName: "", phone: "" });
   const [toast, setToast] = useState({ show: false, type: "", message: "" });
 
-  const showToast = (type, message) => {
+  const showToast = (message, type = "info") => {
     setToast({ show: true, type, message });
   };
 
   const getAllProperties = async () => {
     try {
-      const res = await axios.get(
-        `${API_URL}/api/user/getAllProperties`,
-        { withCredentials: true }
-      );
-      setAllProperties(res.data.data);
+      const res = await axios.get(`${API_URL}/api/user/get-all-properties`, { withCredentials: true });
+      if (res.data.success) {
+        setAllProperties(res.data.data);
+      } else {
+        showToast(res.data.message || "Failed to fetch properties", "error");
+      }
     } catch (error) {
-      console.log(error);
+      console.error(error);
+      showToast("Error fetching properties", "error");
     }
   };
 
   const handleBooking = async (status, propertyId, ownerId) => {
     try {
       const res = await axios.post(
-        `${API_URL}/api/user/bookinghandle/${propertyId}`,
-        { userDetails, status, ownerId },
+        `${API_URL}/api/user/booking-handle/${propertyId}`,
+        { userDetails, status, userId, ownerId },
         { withCredentials: true }
       );
 
       if (res.data.success) {
-        showToast(res.data.message);
+        showToast(res.data.message, "success");
         setShowModal(false);
       } else {
-        showToast(res.data.message);
+        showToast(res.data.message, "error");
       }
     } catch (error) {
-      console.log(error);
-      showToast("Booking failed");
+      console.error(error);
+      showToast("Booking failed", "error");
     }
   };
 
@@ -57,24 +58,18 @@ const AllPropertiesCards = ({ loggedIn }) => {
   const filteredProperties = allProperties
     .filter(
       (property) =>
-        filterPropertyAddress === "" ||
-        property.propertyAddress
-          .toLowerCase()
-          .includes(filterPropertyAddress.toLowerCase())
+        !filterPropertyAddress ||
+        property.propertyAddress.toLowerCase().includes(filterPropertyAddress.toLowerCase())
     )
     .filter(
       (property) =>
-        filterPropertyAdType === "" ||
-        property.propertyAdType
-          .toLowerCase()
-          .includes(filterPropertyAdType.toLowerCase())
+        !filterPropertyAdType ||
+        property.propertyAdType.toLowerCase().includes(filterPropertyAdType.toLowerCase())
     )
     .filter(
       (property) =>
-        filterPropertyType === "" ||
-        property.propertyType
-          .toLowerCase()
-          .includes(filterPropertyType.toLowerCase())
+        !filterPropertyType ||
+        property.propertyType.toLowerCase().includes(filterPropertyType.toLowerCase())
     );
 
   const openModal = (property) => {
@@ -162,9 +157,7 @@ const AllPropertiesCards = ({ loggedIn }) => {
                       Get Info / Book
                     </button>
                   ) : (
-                    <p className="mt-2 text-yellow-400 text-xs">
-                      Login to see details
-                    </p>
+                    <p className="mt-2 text-yellow-400 text-xs">Login to see details</p>
                   )
                 ) : (
                   <p className="mt-2 text-red-400 text-xs">Not Available</p>

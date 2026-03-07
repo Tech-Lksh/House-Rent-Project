@@ -5,41 +5,46 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const connectDB = require("./config/connect.js");
 
-const app = express();
-
 dotenv.config();
 
+const app = express();
 const PORT = process.env.PORT || 8001;
 
-// ⭐ Render / Proxy fix
+// ---------------- Trust Proxy (for cookies behind proxy) ----------------
 app.set("trust proxy", 1);
 
-// middleware
+// ---------------- Middleware ----------------
 app.use(express.json());
 app.use(cookieParser());
 
-// ⭐ CORS
+// ---------------- CORS Setup ----------------
 app.use(
   cors({
     origin: [
       "http://localhost:5173",
       "https://house-rent-project-zeta.vercel.app",
     ],
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
     credentials: true,
   })
 );
 
-// static folder
+// ---------------- Static Folder ----------------
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-// routes
+// ---------------- Routes ----------------
 app.use("/api/user", require("./routes/userRoutes.js"));
-app.use("/api/admin", require("./routes/adminRoutes"));
-app.use("/api/owner", require("./routes/ownerRoutes"));
+app.use("/api/admin", require("./routes/adminRoutes.js"));
+app.use("/api/owner", require("./routes/ownerRoutes.js"));
 
-// server
-app.listen(PORT, () => {
-  connectDB();
-  console.log(`Server running on port ${PORT}`);
-});
+// ---------------- Start Server ----------------
+connectDB()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+  })
+  .catch((error) => {
+    console.error("Database connection failed:", error);
+    process.exit(1); // exit if DB connection fails
+  });

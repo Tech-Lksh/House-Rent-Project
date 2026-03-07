@@ -1,16 +1,24 @@
 const express = require("express");
 const { authMiddleware } = require("../middlewares/authMiddleware");
-const { getAllUsersController, handleStatusController, getAllPropertiesController, getAllBookingsController } = require("../controllers/adminController");
+const {
+  getAllUsersController,
+  handleStatusController,
+  getAllPropertiesController,
+  getAllBookingsController,
+} = require("../controllers/adminController");
 
+const router = express.Router();
 
-const router = express.Router()
+// ---------------- Admin Routes ----------------
+router.get("/get-all-users", authMiddleware, getAllUsersController);
 
-router.get('/getallusers', authMiddleware, getAllUsersController)
+// Update owner status
+router.put("/handle-status", authMiddleware, handleStatusController);
 
-router.post('/handlestatus', authMiddleware, handleStatusController)
+// Get all properties
+router.get("/get-all-properties", authMiddleware, getAllPropertiesController);
 
-router.get('/getallproperties', authMiddleware, getAllPropertiesController)
+// Get all bookings
+router.get("/get-all-bookings", authMiddleware, getAllBookingsController);
 
-router.get('/getallbookings', authMiddleware, getAllBookingsController)
-
-module.exports = router
+module.exports = router;

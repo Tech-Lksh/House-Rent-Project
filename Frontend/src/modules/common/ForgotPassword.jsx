@@ -15,50 +15,50 @@ const ForgotPassword = () => {
     confirmPassword: "",
   });
 
-
   const showToast = (type, message) => {
     setToast({ show: true, type, message });
   };
-
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setData({ ...data, [name]: value });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    if (!data.email || !data.password || !data.confirmPassword) {
-      showToast("Please fill all fields");
+  if (!data.email || !data.password || !data.confirmPassword) {
+    showToast("error", "Please fill all fields");
+    return;
+  }
+
+  if (data.password !== data.confirmPassword) {
+    showToast("error", "Passwords do not match");
+    return;
+  }
+
+  try {
+    const res = await axios.post(
+      `${API_URL}/api/user/forgot-password`,
+      data,
+      { withCredentials: true }
+    );
+
+    if (res.data.success) {
+      showToast("success", "Your password has been changed!");
+      setTimeout(() => navigate("/login"), 1500);
+    } else {
+      showToast("error", res.data.message);
     }
-
-    if (data.password !== data.confirmPassword) {
-       showToast("Passwords do not match");
+  } catch (err) {
+    console.error(err);
+    if (err.response?.status === 401) {
+      showToast("error", "User doesn't exist");
+    } else {
+      showToast("error", "Something went wrong. Please try again.");
     }
-
-    try {
-      const res = await axios.post(
-        `${API_URL}/api/user/forgotpassword`,
-        data,
-        { withCredentials: true }
-      );
-
-      if (res.data.success) {
-        showToast("Your password has been changed!");
-        navigate("/login");
-      } else {
-        showToast(res.data.message);
-      }
-    } catch (err) {
-      if (err.response && err.response.status === 401) {
-        showToast("User doesn't exist");
-      } else {
-        showToast("Something went wrong. Please try again.");
-      }
-      navigate("/register");
-    }
-  };
+  }
+};
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-800 via-gray-900 to-black flex flex-col">
@@ -70,25 +70,31 @@ const ForgotPassword = () => {
         />
       )}
       {/* Navbar */}
-     <nav className="fixed top-0 left-0 w-full z-50 bg-black/30 backdrop-blur-lg shadow-md py-4 px-8 flex justify-between items-center">
-             <h2 className="text-3xl font-extrabold text-indigo-400 tracking-wide">
-               RentEase
-             </h2>
-             <div className="space-x-8 text-lg">
-               <Link to="/" className="text-gray-200 hover:text-indigo-400 transition">
-                 Home
-               </Link>
-               <Link to="/login" className="text-gray-200 hover:text-indigo-400 transition">
-                 Login
-               </Link>
-               <Link
-                 to="/register"
-                 className="text-black bg-indigo-400 px-4 py-2 rounded-lg shadow hover:bg-indigo-500 transition"
-               >
-                 Register
-               </Link>
-             </div>
-           </nav>
+      <nav className="fixed top-0 left-0 w-full z-50 bg-black/30 backdrop-blur-lg shadow-md py-4 px-8 flex justify-between items-center">
+        <h2 className="text-3xl font-extrabold text-indigo-400 tracking-wide">
+          RentEase
+        </h2>
+        <div className="space-x-8 text-lg">
+          <Link
+            to="/"
+            className="text-gray-200 hover:text-indigo-400 transition"
+          >
+            Home
+          </Link>
+          <Link
+            to="/login"
+            className="text-gray-200 hover:text-indigo-400 transition"
+          >
+            Login
+          </Link>
+          <Link
+            to="/register"
+            className="text-black bg-indigo-400 px-4 py-2 rounded-lg shadow hover:bg-indigo-500 transition"
+          >
+            Register
+          </Link>
+        </div>
+      </nav>
 
       {/* Forgot Password Form */}
       <div className="flex-grow flex justify-center items-center px-4">
@@ -152,4 +158,3 @@ const ForgotPassword = () => {
 };
 
 export default ForgotPassword;
-

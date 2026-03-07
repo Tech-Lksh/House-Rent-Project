@@ -1,8 +1,8 @@
-const userSchema = require("../models/UserSchema");
-const propertySchema = require("../models/PropertySchema");
-const bookingSchema = require("../models/BookingSchema");
+const User = require("../models/UserSchema");
+const Property = require("../models/PropertySchema");
+const Booking = require("../models/BookingSchema");
 
-//////////adding property by owner////////
+// ---------------- Add Property by Owner ----------------
 const addPropertyController = async (req, res) => {
   try {
     let images = [];
@@ -13,9 +13,12 @@ const addPropertyController = async (req, res) => {
       }));
     }
 
-    const user = await userSchema.findById({ _id: req.body.userId });
+    const user = await User.findById(req.userId); // ✅ get from middleware
+    if (!user) {
+      return res.status(404).send({ success: false, message: "User not found" });
+    }
 
-    const newPropertyData = new propertySchema({
+    const newProperty = new Property({
       ...req.body,
       propertyImage: images,
       ownerId: user._id,
@@ -23,136 +26,121 @@ const addPropertyController = async (req, res) => {
       isAvailable: "Available",
     });
 
-    await newPropertyData.save();
+    await newProperty.save();
 
     return res.status(200).send({
       success: true,
-      message: "New Property has been stored",
+      message: "New property has been stored",
+      data: newProperty,
     });
   } catch (error) {
-    console.log("Error in get All Users Controller ", error);
+    console.error("Error in addPropertyController:", error);
+    return res.status(500).send({ success: false, message: "Internal server error" });
   }
 };
 
-///////////all properties of owner/////////
+// ---------------- Get All Properties of Owner ----------------
+// ---------------- Get All Properties of Owner ----------------
 const getAllOwnerPropertiesController = async (req, res) => {
-  const { userId } = req.body;
   try {
-    const getAllProperties = await propertySchema.find();
-    const updatedProperties = getAllProperties.filter(
-      (property) => property.ownerId.toString() === userId
-    );
+    const properties = await Property.find({ ownerId: req.userId });
     return res.status(200).send({
       success: true,
-      data: updatedProperties,
+      data: properties,
     });
   } catch (error) {
-    console.error(error);
-    return res
-      .status(500)
-      .send({ message: "Internal server error", success: false });
+    console.error("Error in getAllOwnerPropertiesController:", error);
+    return res.status(500).send({ success: false, message: "Internal server error" });
   }
 };
 
-//////delete the property by owner/////
+// ---------------- Delete Property ----------------
 const deletePropertyController = async (req, res) => {
   const propertyId = req.params.propertyid;
   try {
-    await propertySchema.findByIdAndDelete({
-      _id: propertyId,
-    });
+    const deleted = await Property.findByIdAndDelete(propertyId);
+    if (!deleted) {
+      return res.status(404).send({ success: false, message: "Property not found" });
+    }
 
     return res.status(200).send({
       success: true,
-      message: "The property is deleted",
+      message: "The property has been deleted",
     });
   } catch (error) {
-    console.error(error);
-    return res
-      .status(500)
-      .send({ message: "Internal server error", success: false });
+    console.error("Error in deletePropertyController:", error);
+    return res.status(500).send({ success: false, message: "Internal server error" });
   }
 };
 
-//////updating the property/////////////
+// ---------------- Update Property ----------------
 const updatePropertyController = async (req, res) => {
   const { propertyid } = req.params;
-  console.log(req.body);
   try {
-    const property = await propertySchema.findByIdAndUpdate(
-      { _id: propertyid },
-      {
-        ...req.body,
-        ownerId: req.body.userId,
-      },
+    const updatedProperty = await Property.findByIdAndUpdate(
+      propertyid,
+      { ...req.body, ownerId: req.body.userId },
       { new: true }
     );
 
+    if (!updatedProperty) {
+      return res.status(404).send({ success: false, message: "Property not found" });
+    }
+
     return res.status(200).send({
       success: true,
-      message: "Property updated successfully.",
+      message: "Property updated successfully",
+      data: updatedProperty,
     });
   } catch (error) {
-    console.error("Error updating property:", error);
-    return res.status(500).json({
-      success: false,
-      message: "Failed to update property.",
-    });
+    console.error("Error in updatePropertyController:", error);
+    return res.status(500).send({ success: false, message: "Failed to update property" });
   }
 };
 
+
+// ---------------- Get All Bookings for Owner ----------------
 const getAllBookingsController = async (req, res) => {
-  const { userId } = req.body;
   try {
-    const getAllBookings = await bookingSchema.find();
-    const updatedBookings = getAllBookings.filter(
-      (booking) => booking.ownerID.toString() === userId
-    );
-    return res.status(200).send({
-      success: true,
-      data: updatedBookings,
-    });
+    const bookings = await Booking.find({ ownerID: req.userId });
+    return res.status(200).send({ success: true, data: bookings });
   } catch (error) {
-    console.error(error);
-    return res
-      .status(500)
-      .send({ message: "Internal server error", success: false });
+    console.error("Error in getAllBookingsController:", error);
+    return res.status(500).send({ success: false, message: "Internal server error" });
   }
 };
 
-//////////handle bookings status//////////////
+// ---------------- Handle Booking Status ----------------
 const handleAllBookingstatusController = async (req, res) => {
   const { bookingId, propertyId, status } = req.body;
   try {
-    const booking = await bookingSchema.findByIdAndUpdate(
-      { _id: bookingId },
-      {
-        bookingStatus: status,
-      },
-      {
-        new: true,
-      }
+    const booking = await Booking.findByIdAndUpdate(
+      bookingId,
+      { bookingStatus: status },
+      { new: true }
     );
 
-    const property = await propertySchema.findByIdAndUpdate(
-      { _id: propertyId },
-      {
-        isAvailable: status === 'booked' ? 'Unavailable' : 'Available', 
-      },
+    if (!booking) {
+      return res.status(404).send({ success: false, message: "Booking not found" });
+    }
+
+    const property = await Property.findByIdAndUpdate(
+      propertyId,
+      { isAvailable: status === "booked" ? "Unavailable" : "Available" },
       { new: true }
     );
 
     return res.status(200).send({
       success: true,
-      message: `changed the status of property to ${status}`,
+      message: `Changed the status of property to ${status}`,
+      data: { booking, property },
     });
   } catch (error) {
-    console.error(error);
-    return res
-      .status(500)
-      .send({ message: "Internal server error", success: false });
+    console.error("Error in handleAllBookingstatusController:", error);
+    return res.status(500).send({ success: false, message: "Internal server error" });
   }
 };
+
 module.exports = {
   addPropertyController,
   getAllOwnerPropertiesController,

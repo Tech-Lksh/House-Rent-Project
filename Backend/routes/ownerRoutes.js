@@ -1,43 +1,56 @@
 const express = require("express");
 const multer = require("multer");
 const { authMiddleware } = require("../middlewares/authMiddleware");
-const { addPropertyController, getAllOwnerPropertiesController, handleAllBookingstatusController, deletePropertyController, updatePropertyController, getAllBookingsController } = require("../controllers/ownerController");
-
+const {
+  addPropertyController,
+  getAllOwnerPropertiesController,
+  handleAllBookingstatusController,
+  deletePropertyController,
+  updatePropertyController,
+  getAllBookingsController,
+} = require("../controllers/ownerController");
 
 const router = express.Router();
 
+// ---------------- Multer setup ----------------
 const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
+  destination: (req, file, cb) => {
     cb(null, "./uploads/");
   },
-  filename: function (req, file, cb) {
-    cb(null, file.originalname);
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    const ext = file.originalname.split(".").pop();
+    cb(null, `${file.fieldname}-${uniqueSuffix}.${ext}`);
   },
 });
 
-const upload = multer({ storage: storage });
+const upload = multer({ storage });
 
+// ---------------- Owner Routes ----------------
+
+// Add a new property
 router.post(
-  "/postproperty",
+  "/post-property",
   upload.array("propertyImages"),
   authMiddleware,
   addPropertyController
 );
 
-router.get("/getallproperties", authMiddleware, getAllOwnerPropertiesController);
+// Get all properties of owner
+router.get("/get-all-properties", authMiddleware, getAllOwnerPropertiesController);
 
-router.get("/getallbookings", authMiddleware, getAllBookingsController);
+// Get all bookings for owner
+router.get("/get-all-bookings", authMiddleware, getAllBookingsController);
 
-router.post("/handlebookingstatus", authMiddleware, handleAllBookingstatusController);
+// Handle booking status update
+router.patch("/handle-booking-status", authMiddleware, handleAllBookingstatusController);
 
-router.delete(
-  "/deleteproperty/:propertyid",
-  authMiddleware,
-  deletePropertyController
-);
+// Delete property
+router.delete("/delete-property/:propertyid", authMiddleware, deletePropertyController);
 
+// Update property
 router.patch(
-  "/updateproperty/:propertyid",
+  "/update-property/:propertyid",
   upload.single("propertyImage"),
   authMiddleware,
   updatePropertyController

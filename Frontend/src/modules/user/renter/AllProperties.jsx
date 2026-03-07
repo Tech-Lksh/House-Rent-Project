@@ -1,89 +1,78 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { message } from "antd";
-import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../../App";
 import API_URL from "../../../api";
 
-const RenterAllProperty = () => {
-  const [allProperties, setAllProperties] = useState([]);
-  const navigate = useNavigate();
+const AllProperty = () => {
+  const user = useContext(UserContext);
+  const [bookings, setBookings] = useState([]);
 
-  const getAllProperty = async () => {
+  // Fetch all bookings for tenant
+  const fetchBookings = async () => {
     try {
-      const response = await axios.get(
-        `${API_URL}/api/user/getallbookings`,
-        { withCredentials: true }
-      );
+      const res = await axios.get(`${API_URL}/api/user/get-all-bookings`, {
+        withCredentials: true,
+      });
 
-      if (response.data.success) {
-        setAllProperties(response.data.data);
+      if (res.data.success) {
+        setBookings(res.data.data);
       } else {
-        message.error(response.data.message);
-        navigate("/login")
+        message.error(res.data.message || "Failed to fetch bookings");
       }
     } catch (error) {
       console.error(error);
-      if (error.response && error.response.status === 401) {
-        message.error("Session expired, please login again");
-        navigate("/login");
-      } else {
-        message.error("Failed to fetch properties");
-      }
+      message.error("Failed to fetch bookings");
     }
   };
 
   useEffect(() => {
-    getAllProperty();
-  }, []);
+    if (user?.userLoggedIn) fetchBookings();
+  }, [user]);
 
   return (
-    <div className="overflow-x-auto bg-gray-900/80 backdrop-blur-md border border-gray-700 shadow-xl rounded-xl p-6">
-      <h2 className="text-xl font-semibold text-indigo-400 mb-4">
-        All My Bookings
-      </h2>
-      <table className="min-w-full border border-gray-700 text-sm rounded-lg overflow-hidden">
-        <thead className="bg-indigo-600 text-white">
+    <div className="overflow-x-auto">
+      <table className="min-w-full border border-gray-700 rounded-lg shadow-2xl bg-gray-900/80 backdrop-blur-md text-gray-300">
+        <thead className="bg-indigo-600/80 text-white">
           <tr>
-            <th className="px-4 py-2 border-b border-gray-700 text-left">Booking ID</th>
-            <th className="px-4 py-2 border-b border-gray-700 text-left">Property ID</th>
-            <th className="px-4 py-2 border-b border-gray-700 text-center">Tenant Name</th>
-            <th className="px-4 py-2 border-b border-gray-700 text-center">Phone</th>
-            <th className="px-4 py-2 border-b border-gray-700 text-center">Booking Status</th>
+            <th className="py-3 px-4 text-left">Booking ID</th>
+            <th className="py-3 px-4 text-center">Property ID</th>
+            <th className="py-3 px-4 text-center">Property Name</th>
+            <th className="py-3 px-4 text-center">Status</th>
+            <th className="py-3 px-4 text-center">Owner ID</th>
           </tr>
         </thead>
         <tbody>
-          {allProperties.length > 0 ? (
-            allProperties.map((booking, index) => (
+          {bookings.length > 0 ? (
+            bookings.map((booking, idx) => (
               <tr
                 key={booking._id}
-                className={`${index % 2 === 0 ? "bg-gray-800/60" : "bg-gray-900/50"
-                  } hover:bg-gray-800 transition-colors`}
+                className={`border-b border-gray-700 transition duration-200 hover:bg-gray-800/50 ${
+                  idx % 2 === 0 ? "bg-gray-800/40" : "bg-gray-900/40"
+                }`}
               >
-                <td className="px-4 py-2 border-b border-gray-700 text-gray-200">{booking._id}</td>
-                <td className="px-4 py-2 border-b border-gray-700 text-gray-200">{booking.propertyId}</td>
-                <td className="px-4 py-2 border-b border-gray-700 text-center text-gray-200">
-                  {booking.userName}
-                </td>
-                <td className="px-4 py-2 border-b border-gray-700 text-center text-gray-200">
-                  {booking.phone}
-                </td>
+                <td className="py-3 px-4">{booking._id}</td>
+                <td className="py-3 px-4 text-center">{booking.propertyId}</td>
+                <td className="py-3 px-4 text-center">{booking.propertyName || "N/A"}</td>
                 <td
-                  className={`px-4 py-2 border-b border-gray-700 text-center font-semibold ${booking.bookingStatus === "booked"
-                    ? "text-green-400"
-                    : "text-yellow-400"
-                    }`}
+                  className={`py-3 px-4 text-center font-semibold ${
+                    booking.bookingStatus === "booked"
+                      ? "text-green-400"
+                      : "text-yellow-400"
+                  }`}
                 >
                   {booking.bookingStatus}
                 </td>
+                <td className="py-3 px-4 text-center">{booking.ownerID}</td>
               </tr>
             ))
           ) : (
             <tr>
               <td
-                colSpan="5"
-                className="text-center py-4 text-gray-400 font-medium"
+                colSpan={5}
+                className="py-6 px-4 text-center text-gray-400 italic"
               >
-                No bookings found.
+                No bookings yet
               </td>
             </tr>
           )}
@@ -93,5 +82,4 @@ const RenterAllProperty = () => {
   );
 };
 
-export default RenterAllProperty;
-
+export default AllProperty;

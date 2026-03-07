@@ -25,9 +25,9 @@ const Login = () => {
     e.preventDefault();
 
     if (!data.email || !data.password) {
-      showToast("error", "Please fill all fields");
-    }
-
+  showToast("error", "Please fill all fields");
+  return;
+}
     try {
       const res = await axios.post(`${API_URL}/api/user/login`, data, { withCredentials: true });
       if (res.data.success) {
@@ -35,28 +35,30 @@ const Login = () => {
         localStorage.setItem("user", JSON.stringify(res.data.user));
 
         const user = res.data.user;
-        setTimeout(() => {
-          switch (user.type) {
-            case "Admin":
-              navigate("/adminhome");
-              break;
-            case "Renter":
-              navigate("/renterhome");
-              break;
-            case "Owner":
-              if (user.granted === "ungranted") {
-                showToast("error", "Your account is not yet confirmed by the admin");
-              } else {
-                navigate("/ownerhome");
-              }
-              break;
-            default:
-              navigate("/login");
-              break;
-          }
 
-          window.location.reload();
-        }, 1000);
+if (user.type === "Owner" && user.granted === "ungranted") {
+  showToast("error", "Your account is not yet confirmed by the admin");
+  return;
+}
+
+setTimeout(() => {
+  switch (user.type) {
+    case "Admin":
+      navigate("/adminhome");
+      break;
+    case "User":
+      navigate("/renterhome");
+      break;
+    case "Owner":
+      navigate("/ownerhome");
+      break;
+    default:
+      navigate("/login");
+      break;
+  }
+
+  window.location.reload();
+}, 1000);
       } else {
         showToast("error", res.data.message);
       }

@@ -1,31 +1,39 @@
 const mongoose = require("mongoose");
 
-const userModel = mongoose.Schema({
-  name: {
-    type: String,
-    required: [true, "Name is required"],
-    set: function (value) {
-      return value.charAt(0).toUpperCase() + value.slice(1);
+const userSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: [true, "Name is required"],
+      set: (value) => value.charAt(0).toUpperCase() + value.slice(1),
+    },
+    email: {
+      type: String,
+      required: [true, "Email is required"],
+      unique: true, // Ensure no duplicate emails
+      lowercase: true,
+      trim: true,
+    },
+    password: {
+      type: String,
+      required: [true, "Password is required"],
+    },
+    type: {
+      type: String,
+      required: [true, "User type is required"],
+      enum: ["Admin", "Owner", "User"], // Optional: enforce valid user types
+    },
+    granted: {
+      type: String,
+      default: null, // Used for Owners (ungranted/pending/granted)
     },
   },
-  email: {
-    type: String,
-    required: [true, "email is required"],
-  },
-  password: {
-    type: String,
-    required: [true, "password is required"],
-  },
-  type: {
-    type: String,
-    required: [true, "type is required"],
-  },
-},{
-   strict: false,
-});
+  {
+    timestamps: true,
+    strict: false, // Optional: allow extra fields
+  }
+);
 
-const userSchema = mongoose.model("user", userModel);
+const User = mongoose.model("User", userSchema);
 
-module.exports = userSchema;
-
-
+module.exports = User;

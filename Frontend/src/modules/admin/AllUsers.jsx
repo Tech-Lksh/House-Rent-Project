@@ -20,35 +20,28 @@ const AllUsers = () => {
     getAllUser();
   }, []);
 
-  const getAllUser = async () => {
+const getAllUser = async () => {
   try {
-    const response = await axios.get(
-      `${API_URL}/api/admin/getallusers`,
-      { withCredentials: true }
-    );
+    const { data } = await axios.get(`${API_URL}/api/admin/get-all-users`, { withCredentials: true });
 
-    if (response.data.success) {
-      setAllUser(response.data.data);
-    } else {
-      message.error(response.data.message || "Unauthorized access");
+    if (data.success) setAllUser(data.data);
+    else {
+      message.error(data.message || "Unauthorized access");
       navigate("/login");
     }
   } catch (error) {
     console.error(error);
-
-    if (error.response && error.response.status === 401) {
+    if (error.response?.status === 401) {
       message.error("Session expired, please login again");
       navigate("/login");
-    } else {
-      message.error("Failed to fetch Users");
-    }
+    } else message.error("Failed to fetch Users");
   }
 };
 
 const handleStatus = async (userid, status) => {
   try {
-    const res = await axios.post(
-      `${API_URL}/api/admin/handlestatus`,
+    const res = await axios.put(
+      `${API_URL}/api/admin/handle-status`,
       { userid, status },
       { withCredentials: true }
     );

@@ -13,8 +13,8 @@ const AdminAllProperty = () => {
   const getAllProperty = async () => {
     try {
       const response = await axios.get(
-        `${API_URL}/api/admin/getallproperties`,
-        { withCredentials: true }
+        `${API_URL}/api/admin/get-all-properties`,
+        { withCredentials: true },
       );
 
       if (response.data.success) {
@@ -25,7 +25,7 @@ const AdminAllProperty = () => {
       }
     } catch (error) {
       console.error(error);
-      if (error.response && error.response.status === 401) {
+      if (error.response?.status === 401) {
         message.error("Session expired, please login again");
         navigate("/login");
       } else {
@@ -44,7 +44,7 @@ const AdminAllProperty = () => {
         <thead className="bg-indigo-600/80 text-white">
           <tr>
             <th className="py-3 px-4 text-left">Property ID</th>
-            <th className="py-3 px-4 text-center">Owner ID</th>
+            <th className="py-3 px-4 text-center">Owner Name / ID</th>
             <th className="py-3 px-4 text-center">Property Type</th>
             <th className="py-3 px-4 text-center">Property Ad Type</th>
             <th className="py-3 px-4 text-center">Property Address</th>
@@ -57,14 +57,15 @@ const AdminAllProperty = () => {
             allProperties.map((property, index) => (
               <tr
                 key={property._id}
-                className={`transition duration-200 ${index % 2 === 0 ? "bg-gray-800/60" : "bg-gray-900/60"
-                  } hover:bg-indigo-500/20`}
+                className={`transition duration-200 ${
+                  index % 2 === 0 ? "bg-gray-800/60" : "bg-gray-900/60"
+                } hover:bg-indigo-500/20`}
               >
                 <td className="py-2 px-4 border-b border-gray-700 text-gray-200">
                   {property._id}
                 </td>
                 <td className="py-2 px-4 border-b border-gray-700 text-center text-gray-300">
-                  {property.ownerId}
+                  {property.ownerId?.name || property.ownerId}
                 </td>
                 <td className="py-2 px-4 border-b border-gray-700 text-center text-indigo-400 font-medium">
                   {property.propertyType}
