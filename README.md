@@ -174,14 +174,16 @@ RenterBookingHistory:
 <img width="700" height="901" alt="image" src="https://github.com/user-attachments/assets/f7330526-4d3f-4d2a-87ce-df1fec7a29fb" />
 
 
-🔗 API Endpoints
+## 🔗 API Endpoints
 
+```text id="g3y7n4"
 API Endpoints
+│
 ├── Admin APIs
-│ ├── GET /api/admin/get-all-users 
-│ ├── PUT /api/admin/handle-status 
-│ ├── GET /api/admin/get-all-properties 
-│ └── GET /api/admin/get-all-bookings
+│   ├── GET    /api/admin/get-all-users
+│   ├── PUT    /api/admin/handle-status
+│   ├── GET    /api/admin/get-all-properties
+│   └── GET    /api/admin/get-all-bookings
 │
 ├── Owner APIs
 │   ├── POST   /api/owner/post-property
@@ -192,13 +194,15 @@ API Endpoints
 │   └── PATCH  /api/owner/handle-booking-status
 │
 └── User APIs
-    ├── POST /api/user/register 
-    ├── POST /api/user/login 
-    ├── POST /api/user/forgot-password 
-    ├── GET /api/user/get-all-properties 
-    ├── POST /api/user/get-user-data 
-    ├── POST /api/user/booking-handle/:propertyid 
-    └── GET /api/user/get-all-bookings
+    ├── POST   /api/user/register
+    ├── POST   /api/user/login
+    ├── POST   /api/user/forgot-password
+    ├── GET    /api/user/get-all-properties
+    ├── POST   /api/user/get-user-data
+    ├── POST   /api/user/booking-handle/:propertyid
+    └── GET    /api/user/get-all-bookings
+```
+
 
 
 
