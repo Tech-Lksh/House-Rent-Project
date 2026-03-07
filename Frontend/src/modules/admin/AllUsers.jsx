@@ -21,45 +21,49 @@ const AllUsers = () => {
   }, []);
 
   const getAllUser = async () => {
-    try {
-      const response = await axios.get(
-        `${API_URL}/api/admin/getallusers`
-      );
-      if (response.data.success) {
-        setAllUser(response.data.data);
-      } else {
-         message.error(response.data.message || "Unauthorized access");
-        navigate("/login"); 
-      }
-    } catch (error) {
-      console.error(error);
-      if (error.response && error.response.status === 401) {
-        message.error("Session expired, please login again");
-        navigate("/login");
-      } else {
-        message.error("Failed to fetch Users");
-      }
-    }
-  };
+  try {
+    const response = await axios.get(
+      `${API_URL}/api/admin/getallusers`,
+      { withCredentials: true }
+    );
 
-  const handleStatus = async (userid, status) => {
-    try {
-      const res = await axios.post(
-        `${API_URL}/api/admin/handlestatus`,
-        { userid, status }
-      );
-
-      if (res.data.success) {
-        showToast("success", "Status updated successfully");
-        getAllUser();
-      } else {
-        showToast("error", res.data.message);
-      }
-    } catch (error) {
-      console.error(error);
-      showToast("error", "Failed to update status");
+    if (response.data.success) {
+      setAllUser(response.data.data);
+    } else {
+      message.error(response.data.message || "Unauthorized access");
+      navigate("/login");
     }
-  };
+  } catch (error) {
+    console.error(error);
+
+    if (error.response && error.response.status === 401) {
+      message.error("Session expired, please login again");
+      navigate("/login");
+    } else {
+      message.error("Failed to fetch Users");
+    }
+  }
+};
+
+const handleStatus = async (userid, status) => {
+  try {
+    const res = await axios.post(
+      `${API_URL}/api/admin/handlestatus`,
+      { userid, status },
+      { withCredentials: true }
+    );
+
+    if (res.data.success) {
+      showToast("success", "Status updated successfully");
+      getAllUser();
+    } else {
+      showToast("error", res.data.message);
+    }
+  } catch (error) {
+    console.error(error);
+    showToast("error", "Failed to update status");
+  }
+};
 
   return (
    <div className="overflow-x-auto relative mt-6">
