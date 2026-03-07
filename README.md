@@ -325,6 +325,6 @@ API Endpoints
 **Mansi Patel**
 
 * GitHub: https://github.com/MansiPatel2604
-* LinkedIn: https://linkedin.com/in/member3
+* LinkedIn: https://www.linkedin.com/in/mansi-patel-b59a26310/
 
 
