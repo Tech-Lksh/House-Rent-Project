@@ -2,6 +2,7 @@ import { message } from "antd";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom"
+import API_URL from "../../../api";
 
 const OwnerAllProperties = () => {
   const [image, setImage] = useState(null);
@@ -29,7 +30,7 @@ const OwnerAllProperties = () => {
   const getAllProperty = async () => {
     try {
       const response = await axios.get(
-        "https://house-rent-project-3.onrender.com/api/owner/getallproperties",
+        `${API_URL}/api/owner/getallproperties`,
         { withCredentials: true }
       );
       if (response.data.success) {
@@ -73,7 +74,7 @@ const OwnerAllProperties = () => {
       formData.append("isAvailable", status);
 
       const res = await axios.patch(
-        `https://house-rent-project-3.onrender.com/api/owner/updateproperty/${propertyId}`,
+        `${API_URL}/api/owner/updateproperty/${propertyId}`,
         formData,
         { withCredentials: true }
       );
@@ -102,7 +103,7 @@ const OwnerAllProperties = () => {
     if (window.confirm("Are you sure to delete?")) {
       try {
         const response = await axios.delete(
-          `https://house-rent-project-3.onrender.com/api/owner/deleteproperty/${propertyId}`,
+          `${API_URL}/api/owner/deleteproperty/${propertyId}`,
           { withCredentials: true }
         );
 

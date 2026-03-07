@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Toast from "../common/Toast";
 import { useNavigate } from "react-router-dom";
+import API_URL from "../../api";
 
 
 axios.defaults.withCredentials = true;
@@ -22,7 +23,7 @@ const AllUsers = () => {
   const getAllUser = async () => {
     try {
       const response = await axios.get(
-        "https://house-rent-project-3.onrender.com/api/admin/getallusers"
+        `${API_URL}/api/admin/getallusers`
       );
       if (response.data.success) {
         setAllUser(response.data.data);
@@ -44,7 +45,7 @@ const AllUsers = () => {
   const handleStatus = async (userid, status) => {
     try {
       const res = await axios.post(
-        "https://house-rent-project-3.onrender.com/api/admin/handlestatus",
+        `${API_URL}/api/admin/handlestatus`,
         { userid, status }
       );
 

@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import Toast from "../common/Toast";
+import API_URL from "../../api";
 
 
 const AllPropertiesCards = ({ loggedIn }) => {
@@ -20,7 +21,7 @@ const AllPropertiesCards = ({ loggedIn }) => {
   const getAllProperties = async () => {
     try {
       const res = await axios.get(
-        "https://house-rent-project-3.onrender.com/api/user/getAllProperties",
+        `${API_URL}/api/user/getAllProperties`,
         { withCredentials: true }
       );
       setAllProperties(res.data.data);
@@ -32,7 +33,7 @@ const AllPropertiesCards = ({ loggedIn }) => {
   const handleBooking = async (status, propertyId, ownerId) => {
     try {
       const res = await axios.post(
-        `https://house-rent-project-3.onrender.com/api/user/bookinghandle/${propertyId}`,
+        `${API_URL}/api/user/bookinghandle/${propertyId}`,
         { userDetails, status, ownerId },
         { withCredentials: true }
       );
@@ -130,7 +131,7 @@ const AllPropertiesCards = ({ loggedIn }) => {
               className="bg-gray-800/70 border border-gray-700 rounded-lg shadow-lg hover:shadow-indigo-600/40 transition transform hover:-translate-y-1 overflow-hidden"
             >
               <img
-                src={`https://house-rent-project-3.onrender.com${property.propertyImage[0]?.path}`}
+                src={`${API_URL}${property.propertyImage[0]?.path}`}
                 alt="Property"
                 className="w-full h-40 object-cover"
               />
@@ -188,7 +189,7 @@ const AllPropertiesCards = ({ loggedIn }) => {
             </button>
             <h3 className="text-xl font-bold mb-4 text-white">Property Info</h3>
             <img
-              src={`https://house-rent-project-3.onrender.com${selectedProperty.propertyImage[0]?.path}`}
+              src={`${API_URL}${selectedProperty.propertyImage[0]?.path}`}
               alt="Property"
               className="w-full h-48 object-cover rounded mb-4"
             />

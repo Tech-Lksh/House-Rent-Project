@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { message } from "antd";
 import {useNavigate} from "react-router-dom"
+import API_URL from "../../../api";
 
 axios.defaults.withCredentials = true; 
 
@@ -52,7 +53,7 @@ function AddProperty() {
 
     try {
       const res = await axios.post(
-        "https://house-rent-project-3.onrender.com/api/owner/postproperty",
+        `${API_URL}/api/owner/postproperty`,
         formData,
         { withCredentials: true }
       );
