@@ -1,4 +1,4 @@
-🏠 Real Estate Property Booking Web Application
+<img width="1600" height="903" alt="image" src="https://github.com/user-attachments/assets/4498d72b-8e04-42e5-a033-3f207282a584" />🏠 Real Estate Property Booking Web Application
 
 📌 Description
 This is a **Full Stack Real Estate Web Application** where property owners can list their properties and users can browse and book them online.
@@ -51,7 +51,7 @@ Admins can also view and monitor **all users, all properties, and all bookings**
 
 📁 Project Structure
 
-## 📁 Frontend Folder Structure
+📁 Frontend Folder Structure
 
 Frontend
 │
@@ -91,7 +91,7 @@ Frontend
 └── .gitignore
 
 
-## 📁 Backend Folder Structure
+📁 Backend Folder Structure
 Backend
 │
 ├── config
@@ -123,24 +123,40 @@ Backend
 
 LandingPage:
 <img width="1600" height="897" alt="image" src="https://github.com/user-attachments/assets/4475381a-e5e7-480b-ba3e-151afbec6429" />
+<img width="1600" height="903" alt="image" src="https://github.com/user-attachments/assets/c875a664-97db-4c24-a112-80ebd233ec4b" />
+
+RegisterPage:
+<img width="1600" height="901" alt="image" src="https://github.com/user-attachments/assets/e6fe6ade-374f-4a80-ba3c-dcfdd65e404e" />
+
+LoginPage:
+<img width="1600" height="900" alt="image" src="https://github.com/user-attachments/assets/c53de880-75b7-478d-ab1f-3a566df373e9" />
+
+OwnerHome: 
+<img width="1600" height="902" alt="image" src="https://github.com/user-attachments/assets/75d7a22e-e34f-4865-9f36-dc794f0069f1" />
+
+OwnerPropertiesPage:
+<img width="1600" height="904" alt="image" src="https://github.com/user-attachments/assets/d854791e-a372-419a-b3ab-a2998aafa052" />
+
+OwnerAllBookingsPage:
+<img width="1600" height="905" alt="image" src="https://github.com/user-attachments/assets/8ca6020b-3f86-4498-ad97-b3cfe22b744b" />
+
+AdminHome:
+<img width="1600" height="905" alt="image" src="https://github.com/user-attachments/assets/06385f98-95a0-44ad-a3af-85ecb848ae08" />
+
+AdminAllPropertiesPage:
+<img width="1600" height="902" alt="image" src="https://github.com/user-attachments/assets/e319bd97-8ae3-4f63-a6f9-4d1a8c9384a4" />
+
+AdminAllBookingsPage:
+<img width="1600" height="896" alt="image" src="https://github.com/user-attachments/assets/cb15d92b-8389-4b16-a655-95b51a271ba2" />
+
+RenterHome:
+<img width="1600" height="899" alt="image" src="https://github.com/user-attachments/assets/b6037d0b-a831-42f9-bb03-719e5ecc9fac" />
+
+RenterBookingHistory:
+<img width="1600" height="901" alt="image" src="https://github.com/user-attachments/assets/f7330526-4d3f-4d2a-87ce-df1fec7a29fb" />
 
 
-
-Property Listing Page
-
-(Add screenshot here)
-
-Owner Dashboard
-
-(Add screenshot here)
-
-Example screenshot format:
-
-![Home Page](./screenshots/home.png)
-
-
-
-## 🔗 API Endpoints
+🔗 API Endpoints
 
 API Endpoints
 ├── Admin APIs
@@ -177,25 +193,26 @@ API Endpoints
 📧 Email notifications
 
 
-## 👨‍💻 Team
+👨‍💻 Team
 
-### 👑 Team Leader
+👑 Team Leader
 
-**Lokesh Pardhi**
+Lokesh Pardhi
 GitHub: https://github.com/Tech-Lksh
+
 LinkedIn: https://www.linkedin.com/in/lokesh-pardhi-2200fgh/
 
-### 👨‍💻 Team Members
+👨‍💻 Team Members
 
-**Mahi Sharma**
+Mahi Sharma
 GitHub: https://github.com/Mahi956
 LinkedIn: https://www.linkedin.com/in/mahi-sharma-0049b836a/
 
-**Lucky Yadav**
+Lucky Yadav
 GitHub: https://github.com/Lucky2336
 LinkedIn: https://www.linkedin.com/in/lucky-yadav-4679bb28b/
 
-**Mansi Patel**
+Mansi Patel
 GitHub: https://github.com/MansiPatel2604
 LinkedIn: https://linkedin.com/in/member3
 
