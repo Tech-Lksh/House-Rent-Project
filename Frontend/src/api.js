@@ -1,4 +1,4 @@
-const API_URL = "https://house-rent-project-7.onrender.com";
+const API_URL = "https://house-rent-project-8.onrender.com";
 
 // const API_URL = "http://localhost:8001";
 
