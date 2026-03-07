@@ -42,45 +42,56 @@ const registerController = async (req, res) => {
 };
 
 ////for the login
+//// Login Controller
 const loginController = async (req, res) => {
   try {
+
     const user = await userSchema.findOne({ email: req.body.email });
+
     if (!user) {
-      return res
-        .status(200)
-        .send({ message: "User not found", success: false });
+      return res.status(404).send({
+        success: false,
+        message: "User not found"
+      });
     }
 
     const isMatch = await bcrypt.compare(req.body.password, user.password);
-    
+
     if (!isMatch) {
-      return res
-        .status(200)
-        .send({ message: "Invalid email or password", success: false });
+      return res.status(401).send({
+        success: false,
+        message: "Invalid email or password"
+      });
     }
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_KEY, {
-      expiresIn: "1d",
-    });
+    const token = jwt.sign(
+      { id: user._id },
+      process.env.JWT_KEY,
+      { expiresIn: "7d" }
+    );
 
     user.password = undefined;
 
     res.cookie("token", token, {
       httpOnly: true,
-      secure: false,
-      sameSite: "strict",
-      maxAge: 24 * 60 * 60 * 1000
-    })
-    return res.status(200).send({
-      message: "Login success successfully",
-      success: true,
-      user: user,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "none",
+      maxAge: 7 * 24 * 60 * 60 * 1000
     });
+
+    return res.status(200).send({
+      success: true,
+      message: "Login successful",
+      user
+    });
+
   } catch (error) {
     console.log(error);
-    return res
-      .status(500)
-      .send({ success: false, message: `${error.message}` });
+    return res.status(500).send({
+      success: false,
+      message: "Login failed",
+      error: error.message
+    });
   }
 };
 
