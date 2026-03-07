@@ -206,35 +206,42 @@ API Endpoints
 
 
 
-🚀 Future Improvements
+## 🚀 Future Improvements
 
-💳 Payment gateway integration
-⭐ Property reviews and ratings
-🗺 Google Maps location integration
-🖼 Property image gallery
-📧 Email notifications
+* 💳 **Payment Gateway Integration**
+* ⭐ **Property Reviews & Ratings**
+* 🗺 **Google Maps Location Integration**
+* 🖼 **Property Image Gallery**
+* 📧 **Email Notifications**
 
+---
 
-👨‍💻 Team
+## 👨‍💻 Team
 
-👑 Team Leader
+### 👑 Team Leader
 
-Lokesh Pardhi
-GitHub: https://github.com/Tech-Lksh
+**Lokesh Pardhi**
 
-LinkedIn: https://www.linkedin.com/in/lokesh-pardhi-2200fgh/
+* GitHub: https://github.com/Tech-Lksh
+* LinkedIn: https://www.linkedin.com/in/lokesh-pardhi-2200fgh/
 
-👨‍💻 Team Members
+---
 
-Mahi Sharma
-GitHub: https://github.com/Mahi956
-LinkedIn: https://www.linkedin.com/in/mahi-sharma-0049b836a/
+### 👨‍💻 Team Members
 
-Lucky Yadav
-GitHub: https://github.com/Lucky2336
-LinkedIn: https://www.linkedin.com/in/lucky-yadav-4679bb28b/
+**Mahi Sharma**
 
-Mansi Patel
-GitHub: https://github.com/MansiPatel2604
-LinkedIn: https://linkedin.com/in/member3
+* GitHub: https://github.com/Mahi956
+* LinkedIn: https://www.linkedin.com/in/mahi-sharma-0049b836a/
+
+**Lucky Yadav**
+
+* GitHub: https://github.com/Lucky2336
+* LinkedIn: https://www.linkedin.com/in/lucky-yadav-4679bb28b/
+
+**Mansi Patel**
+
+* GitHub: https://github.com/MansiPatel2604
+* LinkedIn: https://linkedin.com/in/member3
+
 
