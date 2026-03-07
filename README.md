@@ -49,36 +49,43 @@ Admins can also view and monitor **all users, all properties, and all bookings**
   npm run dev 
 
 
-📁 Project Structure
+## 📁 Project Structure
 
-📁 Frontend Folder Structure
+### 📁 Frontend Folder Structure
 
+```
 Frontend
 │
 ├── public
+│
 ├── src
 │   ├── images
+│   │
 │   ├── modules
 │   │   ├── admin
 │   │   │   ├── AdminHome.jsx
 │   │   │   ├── AllBookings.jsx
 │   │   │   ├── AllProperty.jsx
 │   │   │   └── AllUsers.jsx
+│   │   │
 │   │   ├── common
 │   │   │   ├── ForgotPassword.jsx
 │   │   │   ├── Home.jsx
 │   │   │   ├── Login.jsx
 │   │   │   ├── Register.jsx
 │   │   │   └── Toast.jsx
+│   │   │
 │   │   ├── owner
 │   │   │   ├── AddProperty.jsx
 │   │   │   ├── AllBookings.jsx
 │   │   │   ├── AllProperties.jsx
 │   │   │   └── OwnerHome.jsx
+│   │   │
 │   │   └── renter
 │   │       ├── AllProperties.jsx
 │   │       ├── RenterHome.jsx
 │   │       └── AllPropertiesCards.jsx
+│   │
 │   ├── App.css
 │   ├── App.jsx
 │   ├── api.js
@@ -86,30 +93,39 @@ Frontend
 │   └── main.jsx
 │
 ├── index.html
-├── package-lock.json 
+├── package-lock.json
 ├── package.json
 └── .gitignore
+```
 
+---
 
-📁 Backend Folder Structure
+### 📁 Backend Folder Structure
+
+```
 Backend
 │
 ├── config
 │   └── connect.js
+│
 ├── controllers
 │   ├── adminController.js
 │   ├── ownerController.js
 │   └── userController.js
+│
 ├── middlewares
 │   └── authMiddleware.js
+│
 ├── models
 │   ├── BookingSchema.js
 │   ├── PropertySchema.js
 │   └── UserSchema.js
+│
 ├── routes
 │   ├── adminRoutes.js
 │   ├── ownerRoutes.js
 │   └── userRoutes.js
+│
 ├── uploads
 │
 ├── node_modules
@@ -117,6 +133,8 @@ Backend
 ├── index.js
 ├── package-lock.json
 └── package.json
+```
+
 
 
 📷 Screenshots
