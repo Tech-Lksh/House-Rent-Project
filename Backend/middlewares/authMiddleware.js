@@ -13,11 +13,11 @@ const authMiddleware = async (req, res, next) => {
     jwt.verify(token, process.env.JWT_KEY, (err, decode) => {
       if (err) {
         return res
-          .status(200)
-          .send({ message: "Token is not valid", success: false });
+  .status(401)
+  .send({ message: "Token is not valid", success: false });
       } else {
         req.body = req.body || {};
-        req.body.userId = decode.id;
+        req.userId = decode.id;
         next();
       }
     });
