@@ -1,52 +1,78 @@
-🏠 Real Estate Property Booking Web Application
+# 🏠 Real Estate Property Booking Web Application
 
-📌 Description
-This is a **Full Stack Real Estate Web Application** where property owners can list their properties and users can browse and book them online.
-The platform provides **separate dashboards for Admin, Property Owners, and Users**. Owners can manage their properties, 
-while users can explore available listings and make bookings easily.
-The **Admin panel allows administrators to manage the entire platform**, including granting or revoking owner permissions for users. 
-Admins can also view and monitor **all users, all properties, and all bookings** to ensure smooth platform management.
+## 📌 Description
 
+This is a **Full Stack Real Estate Web Application** where **property owners can list their properties** and **users can browse and book them online**.
 
-✨ Features
-🏡 Owners can add new properties
-✏️ Owners can edit property details
-❌ Owners can delete properties
-📋 Users can browse available properties
-📅 Property booking system
-🔐 Authentication and authorization
-📊 Property availability status
-📱 Fully responsive UI
+The platform provides **separate dashboards for Admin, Property Owners, and Users**:
 
+* **Property Owners** can add, edit, and manage their properties.
+* **Users** can explore available listings and book properties easily.
+* The **Admin Panel** allows administrators to manage the entire platform, including granting or revoking owner permissions.
 
-🛠 Tech Stack
+Admins can also monitor **all users, properties, and bookings** to ensure smooth platform management.
 
-➞ Frontend
-• React.js
-• Tailwind CSS
-• Axios
+---
 
-➞ Backend
-• Node.js
-• Express.js
+## ✨ Features
 
-➞ Database
-• MongoDB
-• Mongoose
+* 🏡 Owners can add new properties
+* ✏️ Owners can edit property details
+* ❌ Owners can delete properties
+* 📋 Users can browse available properties
+* 📅 Property booking system
+* 🔐 Authentication and authorization
+* 📊 Property availability status
+* 📱 Fully responsive UI
 
+---
 
-⚙ Installation
-1️⃣ Clone the repository
-  https://github.com/Tech-Lksh/House-Rent-Project.git
+## 🛠 Tech Stack
 
-2️⃣ Navigate into the project folder
-  cd House-Rent-Project
+### ➤ Frontend
 
-3️⃣ Install dependencies
-  npm install
+* React.js
+* Tailwind CSS
+* Axios
 
-4️⃣ Run the project
-  npm run dev 
+### ➤ Backend
+
+* Node.js
+* Express.js
+
+### ➤ Database
+
+* MongoDB
+* Mongoose
+
+---
+
+## ⚙ Installation
+
+### 1️⃣ Clone the repository
+
+```bash
+git clone https://github.com/Tech-Lksh/House-Rent-Project.git
+```
+
+### 2️⃣ Navigate into the project folder
+
+```bash
+cd House-Rent-Project
+```
+
+### 3️⃣ Install dependencies
+
+```bash
+npm install
+```
+
+### 4️⃣ Run the project
+
+```bash
+npm run dev
+```
+
 
 
 ## 📁 Project Structure
