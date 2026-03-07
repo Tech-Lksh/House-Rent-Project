@@ -10,31 +10,18 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 8001;
 
-// ---------------- Trust Proxy (important for Render/Heroku) ----------------
-app.set("trust proxy", 1); // 🟢 required for secure cookies behind a proxy
+// ---------------- Trust Proxy ----------------
+app.set("trust proxy", 1); // Needed for secure cookies behind a proxy
 
 // ---------------- Middleware ----------------
 app.use(express.json());
 app.use(cookieParser());
 
-// ---------------- CORS Setup ----------------
-const allowedOrigins = [
-  "http://localhost:5173", // local dev frontend
-  "https://house-rent-project-zeta.vercel.app", // your deployed frontend
-  "https://house-rent-project-5.onrender.com", // optional: backend domain itself
-];
-
+// ---------------- CORS Setup (simplified) ----------------
 app.use(
   cors({
-    origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
-    credentials: true, // 🟢 allows cookies to be sent cross-origin
+    origin: true,         // allow any origin dynamically
+    credentials: true,    // allow cookies to be sent cross-origin
   })
 );
 
