@@ -75,29 +75,50 @@ const deletePropertyController = async (req, res) => {
 
 // ---------------- Update Property ----------------
 const updatePropertyController = async (req, res) => {
-  const { propertyid } = req.params;
   try {
-    const updatedProperty = await Property.findByIdAndUpdate(
-      propertyid,
-      { ...req.body, ownerId: req.body.userId },
-      { new: true }
+    const { propertyid } = req.params;
+
+    let updateData = { ...req.body };
+
+    // Handle image update
+    if (req.files && req.files.length > 0) {
+      const images = req.files.map((file) => ({
+        filename: file.filename,
+        path: `/uploads/${file.filename}`,
+      }));
+
+      updateData.propertyImage = images;
+    }
+
+    const updatedProperty = await Property.findOneAndUpdate(
+      { _id: propertyid, ownerId: req.userId }, // security
+      updateData,
+      { new: true, runValidators: true }
     );
 
     if (!updatedProperty) {
-      return res.status(404).send({ success: false, message: "Property not found" });
+      return res.status(404).send({
+        success: false,
+        message: "Property not found",
+      });
     }
 
-    return res.status(200).send({
+    res.status(200).send({
       success: true,
       message: "Property updated successfully",
       data: updatedProperty,
     });
+
   } catch (error) {
-    console.error("Error in updatePropertyController:", error);
-    return res.status(500).send({ success: false, message: "Failed to update property" });
+    console.error("Update Property Error:", error);
+
+    res.status(500).send({
+      success: false,
+      message: "Failed to update property",
+      error: error.message,
+    });
   }
 };
-
 
 // ---------------- Get All Bookings for Owner ----------------
 const getAllBookingsController = async (req, res) => {

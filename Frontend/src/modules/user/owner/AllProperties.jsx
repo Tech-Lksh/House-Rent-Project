@@ -29,27 +29,27 @@ const OwnerAllProperties = () => {
   };
 
   const getAllProperty = async () => {
-  try {
-    const response = await axios.get(
-      `${API_URL}/api/owner/get-all-properties`, // GET request
-      { withCredentials: true }
-    );
-    if (response.data.success) {
-      setAllProperties(response.data.data);
-    } else {
-      message.error("Unauthorized access");
-      navigate("/login");
+    try {
+      const response = await axios.get(
+        `${API_URL}/api/owner/get-all-properties`, // GET request
+        { withCredentials: true },
+      );
+      if (response.data.success) {
+        setAllProperties(response.data.data);
+      } else {
+        message.error("Unauthorized access");
+        navigate("/login");
+      }
+    } catch (error) {
+      console.log(error);
+      if (error.response?.status === 401) {
+        message.error("Session expired, please login again");
+        navigate("/login");
+      } else {
+        message.error("Failed to fetch properties");
+      }
     }
-  } catch (error) {
-    console.log(error);
-    if (error.response?.status === 401) {
-      message.error("Session expired, please login again");
-      navigate("/login");
-    } else {
-      message.error("Failed to fetch properties");
-    }
-  }
-};
+  };
 
   useEffect(() => {
     getAllProperty();
@@ -66,44 +66,66 @@ const OwnerAllProperties = () => {
   };
 
   const saveChanges = async (propertyId) => {
-    try {
-      const formData = new FormData();
-      Object.entries(editingPropertyData).forEach(([key, value]) => {
-        formData.append(key, value);
-      });
-      if (image) formData.append("propertyImage", image);
+  try {
+    const formData = new FormData();
 
-      const res = await axios.patch(
-        `${API_URL}/api/owner/update-property/${propertyId}`,
-        formData,
-        { withCredentials: true }
-      );
+    formData.append("propertyType", editingPropertyData.propertyType);
+    formData.append("propertyAdType", editingPropertyData.propertyAdType);
+    formData.append("propertyAddress", editingPropertyData.propertyAddress);
+    formData.append("ownerContact", editingPropertyData.ownerContact);
+    formData.append("propertyAmt", editingPropertyData.propertyAmt);
+    formData.append("additionalInfo", editingPropertyData.additionalInfo);
+    formData.append("isAvailable", editingPropertyData.isAvailable);
 
-      if (res.data.success) {
-        message.success(res.data.message);
-        handleClose();
-        getAllProperty();
-      } else {
-        message.error(res.data.message || "Unauthorized access");
-        navigate("/login");
-      }
-    } catch (error) {
-      console.log(error);
-      if (error.response?.status === 401) {
-        message.error("Session expired, please login again");
-        navigate("/login");
-      } else {
-        message.error("Failed to save changes");
-      }
+    if (image) {
+      formData.append("propertyImages", image);
     }
-  };
+
+    const res = await axios.patch(
+      `${API_URL}/api/owner/update-property/${propertyId}`,
+      formData,
+      { withCredentials: true }
+    );
+
+    if (res.data.success) {
+      message.success(res.data.message);
+
+      setImage(null);
+      setEditingPropertyId(null);
+      setEditingPropertyData({
+        propertyType: "",
+        propertyAdType: "",
+        propertyAddress: "",
+        ownerContact: "",
+        propertyAmt: 0,
+        additionalInfo: "",
+        isAvailable: "Available",
+      });
+
+      handleClose();
+      getAllProperty();
+    } else {
+      message.error(res.data.message || "Unauthorized access");
+      navigate("/login");
+    }
+  } catch (error) {
+    console.log(error);
+
+    if (error.response?.status === 401) {
+      message.error("Session expired, please login again");
+      navigate("/login");
+    } else {
+      message.error("Failed to save changes");
+    }
+  }
+};
 
   const handleDelete = async (propertyId) => {
     if (window.confirm("Are you sure to delete?")) {
       try {
         const response = await axios.delete(
           `${API_URL}/api/owner/delete-property/${propertyId}`,
-          { withCredentials: true }
+          { withCredentials: true },
         );
         if (response.data.success) {
           message.success(response.data.message);
@@ -147,11 +169,21 @@ const OwnerAllProperties = () => {
                 className="border-b border-gray-700 hover:bg-gray-800/60 transition duration-200"
               >
                 <td className="px-4 py-3">{property._id}</td>
-                <td className="px-4 py-3 text-center">{property.propertyType}</td>
-                <td className="px-4 py-3 text-center">{property.propertyAdType}</td>
-                <td className="px-4 py-3 text-center">{property.propertyAddress}</td>
-                <td className="px-4 py-3 text-center">{property.ownerContact}</td>
-                <td className="px-4 py-3 text-center">₹{property.propertyAmt}</td>
+                <td className="px-4 py-3 text-center">
+                  {property.propertyType}
+                </td>
+                <td className="px-4 py-3 text-center">
+                  {property.propertyAdType}
+                </td>
+                <td className="px-4 py-3 text-center">
+                  {property.propertyAddress}
+                </td>
+                <td className="px-4 py-3 text-center">
+                  {property.ownerContact}
+                </td>
+                <td className="px-4 py-3 text-center">
+                  ₹{property.propertyAmt}
+                </td>
                 <td
                   className={`px-4 py-3 text-center font-semibold ${
                     property.isAvailable === "Available"
@@ -184,7 +216,9 @@ const OwnerAllProperties = () => {
       {show && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/70 backdrop-blur-sm z-50">
           <div className="bg-gray-900/90 border border-gray-700 text-white w-full max-w-xl p-6 rounded-xl shadow-2xl">
-            <h3 className="text-2xl font-bold mb-6 text-indigo-400">Edit Property</h3>
+            <h3 className="text-2xl font-bold mb-6 text-indigo-400">
+              Edit Property
+            </h3>
             <form
               onSubmit={(e) => {
                 e.preventDefault();

@@ -51,7 +51,7 @@ router.delete("/delete-property/:propertyid", authMiddleware, deletePropertyCont
 // Update property
 router.patch(
   "/update-property/:propertyid",
-  upload.single("propertyImage"),
+  upload.array("propertyImages"),
   authMiddleware,
   updatePropertyController
 );
