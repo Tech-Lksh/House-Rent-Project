@@ -33,6 +33,7 @@ Admins can also monitor **all users, properties, and bookings** to ensure smooth
 
 * React.js
 * Tailwind CSS
+* Material.io
 * Axios
 
 ### ➤ Backend
